@@ -14,9 +14,10 @@ function Board() {
   const [xIsNext, setXIsNext] = useState(true);
   const [scores, setScores] = useState({ X: 0, O: 0 });
   const [winnerLine, setWinnerLine] = useState(null);
+  const [gameEnded, setGameEnded] = useState(false);
 
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares) || winnerLine) return;
+    if (squares[i] || gameEnded) return;
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext ? 'X' : 'O';
     setSquares(nextSquares);
@@ -33,10 +34,13 @@ function Board() {
         nextSquares[a] === winner && nextSquares[b] === winner && nextSquares[c] === winner
       );
       setWinnerLine(winningLine);
+      setGameEnded(true);
       setScores((prevScores) => ({
         ...prevScores,
         [winner]: prevScores[winner] + 1,
       }));
+    } else if (nextSquares.every((square) => square !== null)) {
+      setGameEnded(true);
     }
   }
 
@@ -44,6 +48,7 @@ function Board() {
     setSquares(Array(9).fill(null));
     setXIsNext(true);
     setWinnerLine(null);
+    setGameEnded(false);
   }
 
   const winner = calculateWinner(squares);
@@ -75,7 +80,7 @@ function Board() {
       <button className="reset-button" onClick={resetGame}>
         Reiniciar Jogo
       </button>
-      {(winner || squares.every((square) => square !== null)) && (
+      {gameEnded && (
         <div className="modal">
           <div className="modal-content">
             <h2>{winner ? `Parabéns, ${winner} venceu!` : 'Jogo empatado!'}</h2>
