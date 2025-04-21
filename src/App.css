@@ -1,0 +1,50 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.status {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 5px;
+}
+
+.square {
+  width: 80px;
+  height: 80px;
+  background-color: #f0f0f0;
+  border: 2px solid #333;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.square:hover {
+  background-color: #e0e0e0;
+}
+
+.reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: #0056b3;
+}
