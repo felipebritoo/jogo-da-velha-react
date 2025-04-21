@@ -12,6 +12,7 @@ function Square({ value, onSquareClick }) {
 function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
+  const [scores, setScores] = useState({ X: 0, O: 0 });
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) return;
@@ -19,6 +20,14 @@ function Board() {
     nextSquares[i] = xIsNext ? 'X' : 'O';
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
+
+    const winner = calculateWinner(nextSquares);
+    if (winner) {
+      setScores((prevScores) => ({
+        ...prevScores,
+        [winner]: prevScores[winner] + 1,
+      }));
+    }
   }
 
   function resetGame() {
@@ -43,6 +52,9 @@ function Board() {
         {squares.map((square, i) => (
           <Square key={i} value={square} onSquareClick={() => handleClick(i)} />
         ))}
+      </div>
+      <div className="scores" style={{ marginTop: '20px', fontSize: '20px' }}>
+        Placar: X - {scores.X} | O - {scores.O}
       </div>
       <button className="reset-button" onClick={resetGame}>
         Reiniciar Jogo
